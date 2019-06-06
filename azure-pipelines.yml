@@ -25,7 +25,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: '**/*.fsproj'
     arguments: '--configuration Release'
 
 - task: VSTest@2
