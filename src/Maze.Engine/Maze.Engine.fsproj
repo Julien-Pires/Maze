@@ -4,4 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="Core.fs" />
+    <Compile Include="Player.fs" />
+    <Compile Include="Dungeon.fs" />
+    <Compile Include="Game.fs" />
+  </ItemGroup>
+
 </Project>
