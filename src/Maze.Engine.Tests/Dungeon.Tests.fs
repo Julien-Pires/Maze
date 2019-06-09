@@ -4,25 +4,10 @@ open Expecto
 open Swensen.Unquote
 open Maze.Engine
 
-module Dungeon =
-    let noRooms : Room[][] = [|
-        [| Void; Void; Void |]
-        [| Void; Void; Void |]
-        [| Void; Void; Void |]|]
-
-    let partialRooms : Room[][] = [|
-        [| Void; Empty; Void |]
-        [| Empty; Empty; Empty |]
-        [| Void; Empty; Void |]|]
-
-    let fullRooms : Room[][] = [|
-        [| Empty; Empty; Empty |]
-        [| Empty; Empty; Empty |]
-        [| Empty; Empty; Empty |]|]
-
+module Dungeon_Tests =
     [<Tests>]
     let canMoveTests =
-        testList "Dungeon CanMove" [
+        testList "Dungeon/CanMove" [
             yield 
                 testCase "should return true when the target is identical to the original position"
                 (fun _ ->

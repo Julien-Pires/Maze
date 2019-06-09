@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <Compile Include="Expecto.fs" />
+    <Compile Include="Fixtures.fs" />
     <Compile Include="Dungeon.Tests.fs" />
+    <Compile Include="Board.Tests.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 

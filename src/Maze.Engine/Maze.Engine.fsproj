@@ -6,8 +6,10 @@
 
   <ItemGroup>
     <Compile Include="Core.fs" />
+    <Compile Include="Actions.fs" />
     <Compile Include="Player.fs" />
     <Compile Include="Map.fs" />
+    <Compile Include="Board.fs" />
     <Compile Include="Game.fs" />
   </ItemGroup>
 
