@@ -5,17 +5,17 @@ open Swensen.Unquote
 open Maze.Engine
 
 module Dungeon =
-    let emptyDungeon : Room[][] = [|
+    let noRooms : Room[][] = [|
         [| Void; Void; Void |]
         [| Void; Void; Void |]
         [| Void; Void; Void |]|]
 
-    let partialDungeon : Room[][] = [|
+    let partialRooms : Room[][] = [|
         [| Void; Empty; Void |]
         [| Empty; Empty; Empty |]
         [| Void; Empty; Void |]|]
 
-    let fullDungeon : Room[][] = [|
+    let fullRooms : Room[][] = [|
         [| Empty; Empty; Empty |]
         [| Empty; Empty; Empty |]
         [| Empty; Empty; Empty |]|]
@@ -26,7 +26,7 @@ module Dungeon =
             yield 
                 testCase "should return true when the target is identical to the original position"
                 (fun _ ->
-                    let sut = Dungeon({ Rooms = emptyDungeon })
+                    let sut = Map(noRooms)
             
                     test <@ sut.CanMove { X = 0; Y = 0 } { X = 0; Y = 0 } @> )
 
@@ -37,7 +37,7 @@ module Dungeon =
                   ({ X = 1; Y = 1}, { X = 1; Y = 0 })
                   ({ X = 1; Y = 1}, { X = 1; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Dungeon({ Rooms = fullDungeon })
+                    let sut = Map(fullRooms)
                     
                     test <@ sut.CanMove position target @> )
                     
@@ -48,7 +48,7 @@ module Dungeon =
                   ({ X = 0; Y = 1}, { X = 0; Y = 0 })
                   ({ X = 0; Y = 1}, { X = 0; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Dungeon({ Rooms = partialDungeon })
+                    let sut = Map(partialRooms)
                 
                     test <@ sut.CanMove position target |> not @> )
                     
@@ -59,7 +59,7 @@ module Dungeon =
                   ({ X = 1; Y = 1}, { X = 2; Y = 0 })
                   ({ X = 1; Y = 1}, { X = 2; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Dungeon({ Rooms = fullDungeon })
+                    let sut = Map(fullRooms)
                     
                     test <@ sut.CanMove position target |> not @> )
                     
@@ -70,7 +70,7 @@ module Dungeon =
                   ({ X = 2; Y = 2}, { X = 2; Y = 0 })
                   ({ X = 2; Y = 2}, { X = 0; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Dungeon({ Rooms = fullDungeon })
+                    let sut = Map(fullRooms)
                 
                     test <@ sut.CanMove position target |> not @> )
                     
@@ -81,6 +81,6 @@ module Dungeon =
                   ({ X = 2; Y = 2}, { X = 3; Y = 2 })
                   ({ X = 2; Y = 2}, { X = 2; Y = 3 }) ]
                 (fun (position, target) () ->
-                    let sut = Dungeon({ Rooms = fullDungeon })
+                    let sut = Map(fullRooms)
             
                     test <@ sut.CanMove position target |> not @> ) ]
