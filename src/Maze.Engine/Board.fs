@@ -15,10 +15,11 @@ module Board =
     let move (map : Map) character direction =
         let movement =
             match direction with
-            | Up -> { X = 0; Y = -1 }
-            | Down -> { X = 0; Y = 1 }
-            | Left -> { X = -1; Y = 0 }
-            | Right -> { X = 1; Y = 0 }
+            | Direction.Up -> { X = 0; Y = -1 }
+            | Direction.Down -> { X = 0; Y = 1 }
+            | Direction.Left -> { X = -1; Y = 0 }
+            | Direction.Right -> { X = 1; Y = 0 }
+            | _ -> { X = 0; Y = 0 }
         let target =
             { X = character.Position.X + movement.X 
               Y = character.Position.Y + movement.Y }

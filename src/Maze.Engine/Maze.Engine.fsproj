@@ -10,7 +10,16 @@
     <Compile Include="Player.fs" />
     <Compile Include="Map.fs" />
     <Compile Include="Board.fs" />
+    <Compile Include="Commands.fs" />
     <Compile Include="Game.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FParsec" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" />
   </ItemGroup>
 
 </Project>

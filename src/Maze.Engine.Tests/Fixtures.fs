@@ -18,3 +18,9 @@ module Fixtures =
         [| Empty; Empty; Empty |]
         [| Empty; Empty; Empty |]
         [| Empty; Empty; Empty |]|]
+
+module Direction =
+    let up = "up"
+    let down = "down"
+    let left = "left"
+    let right = "right"

@@ -9,6 +9,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Maze.Engine", "Maze.Engine\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Maze.Engine.Tests", "Maze.Engine.Tests\Maze.Engine.Tests.fsproj", "{270A16C7-4085-4117-BFD0-285DBC11004A}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Maze.FSharp", "Maze.FSharp\Maze.FSharp.fsproj", "{DE9EAE63-D2BC-40B3-B537-A65F743870B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{270A16C7-4085-4117-BFD0-285DBC11004A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{270A16C7-4085-4117-BFD0-285DBC11004A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{270A16C7-4085-4117-BFD0-285DBC11004A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE9EAE63-D2BC-40B3-B537-A65F743870B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9EAE63-D2BC-40B3-B537-A65F743870B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9EAE63-D2BC-40B3-B537-A65F743870B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9EAE63-D2BC-40B3-B537-A65F743870B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
