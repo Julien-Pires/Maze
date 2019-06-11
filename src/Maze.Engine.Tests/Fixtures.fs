@@ -4,20 +4,25 @@ open Maze.Engine
 
 [<AutoOpen>]
 module Fixtures =
-    let noRooms : Room[][] = [|
-        [| Void; Void; Void |]
-        [| Void; Void; Void |]
-        [| Void; Void; Void |]|]
+    let noRooms = []
 
-    let partialRooms : Room[][] = [|
-        [| Void; Empty; Void |]
-        [| Empty; Empty; Empty |]
-        [| Void; Empty; Void |]|]
+    let partialRooms =
+        [ ({ X = 1; Y = 0}, Empty)
+          ({ X = 0; Y = 1}, Empty)
+          ({ X = 1; Y = 1}, Empty)
+          ({ X = 2; Y = 1}, Empty)
+          ({ X = 1; Y = 2}, Empty) ]
 
-    let fullRooms : Room[][] = [|
-        [| Empty; Empty; Empty |]
-        [| Empty; Empty; Empty |]
-        [| Empty; Empty; Empty |]|]
+    let fullRooms =
+        [ ({ X = 0; Y = 0}, Empty)
+          ({ X = 1; Y = 0}, Empty)
+          ({ X = 2; Y = 0}, Empty)
+          ({ X = 0; Y = 1}, Empty)
+          ({ X = 1; Y = 1}, Empty)
+          ({ X = 2; Y = 1}, Empty)
+          ({ X = 0; Y = 2}, Empty)
+          ({ X = 1; Y = 2}, Empty)
+          ({ X = 2; Y = 2}, Empty) ]
 
 module Direction =
     let up = "up"

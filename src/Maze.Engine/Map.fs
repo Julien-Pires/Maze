@@ -7,11 +7,10 @@ type Room =
     | Empty
     | Exit
 
-type Rooms = Room[][]
+type Rooms = (Position * Room) list
 
 type Map(rooms: Rooms) =
-    let height = rooms.Length
-    let width = rooms.[0].Length
+    let rooms = rooms |> Map.ofList
 
     member __.CanMove position target =
         let xDiff = Math.Abs (position.X - target.X)
@@ -20,9 +19,7 @@ type Map(rooms: Rooms) =
         | 0 -> true
         | x when x > 1 -> false
         | _ ->
-            if target.X < 0 || target.X >= width then false
-            else if target.Y < 0 || target.Y >= height then false
-            else
-                match rooms.[target.Y].[target.X] with
-                | Void -> false
-                | _ -> true
+            match rooms |> Map.tryFind target with
+            | Some Void -> false
+            | Some _ -> true
+            | _ -> false
