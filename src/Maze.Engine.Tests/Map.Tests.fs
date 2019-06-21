@@ -11,9 +11,9 @@ module Map_Tests =
             yield 
                 testCase "should return true when the target is identical to the original position"
                 (fun _ ->
-                    let sut = Map(noRooms)
+                    let map = { Rooms = Map(noRooms) }
             
-                    test <@ sut.CanMove { X = 0; Y = 0 } { X = 0; Y = 0 } @> )
+                    test <@ map |> Map.canMove { X = 0; Y = 0 } { X = 0; Y = 0 } @> )
 
             yield!
                 testTheory "should return true when there is a room at the specified position"
@@ -22,9 +22,9 @@ module Map_Tests =
                   ({ X = 1; Y = 1}, { X = 1; Y = 0 })
                   ({ X = 1; Y = 1}, { X = 1; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Map(fullRooms)
+                    let map = { Rooms = Map(fullRooms) }
                     
-                    test <@ sut.CanMove position target @> )
+                    test <@ map |> Map.canMove position target @> )
                     
             yield!
                 testTheory "should return false when there is no room at the specified position"
@@ -33,9 +33,9 @@ module Map_Tests =
                   ({ X = 0; Y = 1}, { X = 0; Y = 0 })
                   ({ X = 0; Y = 1}, { X = 0; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Map(partialRooms)
+                    let map = { Rooms = Map(partialRooms) }
                 
-                    test <@ sut.CanMove position target |> not @> )
+                    test <@ map |> Map.canMove position target |> not @> )
                     
             yield!
                 testTheory "should return false when the move is in diagonal"
@@ -44,9 +44,9 @@ module Map_Tests =
                   ({ X = 1; Y = 1}, { X = 2; Y = 0 })
                   ({ X = 1; Y = 1}, { X = 2; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Map(fullRooms)
+                    let map = { Rooms = Map(fullRooms) }
                     
-                    test <@ sut.CanMove position target |> not @> )
+                    test <@ map |> Map.canMove position target |> not @> )
                     
             yield!
                 testTheory "should return false when the move is more than one room away"
@@ -55,6 +55,6 @@ module Map_Tests =
                   ({ X = 2; Y = 2}, { X = 2; Y = 0 })
                   ({ X = 2; Y = 2}, { X = 0; Y = 2 }) ]
                 (fun (position, target) () ->
-                    let sut = Map(fullRooms)
+                    let map = { Rooms = Map(fullRooms) }
                 
-                    test <@ sut.CanMove position target |> not @> ) ]
+                    test <@ map |> Map.canMove position target |> not @> ) ]

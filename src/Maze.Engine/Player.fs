@@ -3,5 +3,4 @@
 type CharacterName = string
 
 type Character = {
-    Name : CharacterName
-    Position: Position }
+    Name : CharacterName }

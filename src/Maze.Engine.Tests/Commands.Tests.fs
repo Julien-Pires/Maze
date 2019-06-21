@@ -4,15 +4,15 @@ open Expecto
 open Swensen.Unquote
 open Maze.Engine
 
-module Commands_Tests = 
+module Parser_Tests = 
     [<Tests>]
     let parseTests =
-        testList "CommandsParser/parse" [
+        testList "Parser/parse" [
             yield!
                 testTheory "should return an action when input is an action"
-                [ ("move left", Move Direction.left) 
-                  ("move right", Move Direction.right)
-                  ("move up", Move Direction.up)
-                  ("move down", Move Direction.down) ]
+                [ ("move Left", Move Left) 
+                  ("move Right", Move Right)
+                  ("move Forward", Move Forward)
+                  ("move Backward", Move Backward) ]
                 (fun (input, expected) () ->
                     test <@ CommandsParser.parse input = Some expected @>) ]

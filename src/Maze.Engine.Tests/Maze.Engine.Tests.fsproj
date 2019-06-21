@@ -10,7 +10,7 @@
     <Compile Include="Expecto.fs" />
     <Compile Include="Fixtures.fs" />
     <Compile Include="Map.Tests.fs" />
-    <Compile Include="Board.Tests.fs" />
+    <Compile Include="Dungeon.Tests.fs" />
     <Compile Include="Commands.Tests.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
