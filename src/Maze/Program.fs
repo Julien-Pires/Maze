@@ -1,7 +1,7 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open System
+﻿open System
+open FSharp.Control
 open Maze.Engine
+open Maze.FSharp
 
 [<EntryPoint>]
 let main argv =
@@ -15,13 +15,13 @@ let main argv =
                 ({ X = 0; Y = 3 }, Empty) ] 
         } 
     }
-    let game = Game.Start dungeon
-    let rec loop () =  async {
-        let input = Console.ReadLine()
-        let results = game.Input input
-        match results with
-        | Response x -> printfn "%s" x
-        return! loop() }
-
-    loop() |> Async.RunSynchronously
+    let game = Game.init dungeon
+    Console.ReadLine() |> game.Input
+    let update =
+        game.Result
+        |> AsyncSeq.iter (function
+            | WaitInput -> Console.ReadLine() |> game.Input
+            | Response x -> printfn "%s" x)
+        |> Async.RunSynchronously      
+    
     0 // return an integer exit code

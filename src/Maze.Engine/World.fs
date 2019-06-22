@@ -1,31 +1,33 @@
 ﻿namespace Maze.Engine
 
+open FSharp.Control
+open Maze.FSharp
+
 type WorldResult =
+    | WaitInput
     | Response of string
 
-type WorldCommand = {
-    Command: string
-    Reply: AsyncReplyChannel<WorldResult> }
+type WorldCommand = string
 
 type WorldResponse = WorldResult -> unit
 
 type WorldState = {
     Commands: Command list
-    Dungeon: Dungeon
-    Response: WorldResponse option }
+    Dungeon: Dungeon }
 
 module World =
     let private init dungeon = 
+        let obs = ObservableSource()
         let agent =
             Agent.Start <| fun inbox ->
                 let rec loop state = async {
                     let! msg = inbox.Receive()
-                    let command = CommandsParser.parse msg.Command
+                    let command = CommandsParser.parse msg
                     match command with
-                    | Some cmd -> return! queueCommand {
-                        state with Response = Some (fun result -> msg.Reply.Reply result) } cmd
+                    | Some cmd -> return! queueCommand state cmd
                     | None ->
-                        msg.Reply.Reply <| Response "Invalid command, please retry"
+                        obs.OnNext <| Response "Invalid command, please retry"
+                        obs.OnNext WaitInput
                         return! loop state }
 
                 and queueCommand state command = async {
@@ -37,10 +39,10 @@ module World =
                     | [] -> return! loop state }
 
                 and sendResult state result = async {
-                    match (state.Response, result) with
-                    | (Some reply), (Success x) -> reply <| Response x.Message
-                    | (Some reply), (Failure x) -> reply <| Response x
-                    | _ -> ()
+                    match (result) with
+                    | Success x -> obs.OnNext <| Response x.Message
+                    | Failure x -> obs.OnNext <| Response x
+                    obs.OnNext WaitInput
                     return! loop state }
 
                 and explore state command = async {
@@ -55,9 +57,8 @@ module World =
 
                 loop {
                     Commands = []
-                    Dungeon = dungeon
-                    Response = None }
-
-        fun command -> agent.PostAndReply (fun reply -> { Command = command; Reply = reply })       
+                    Dungeon = dungeon }
+        
+        (agent.Post, obs.AsObservable |> AsyncSeq.ofObservableBuffered)
 
     let start dungeon = init dungeon
