@@ -16,7 +16,6 @@ let main argv =
         } 
     }
     let game = Game.init dungeon
-    Console.ReadLine() |> game.Input
     let update =
         game.Result
         |> AsyncSeq.iter (function

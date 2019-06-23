@@ -59,6 +59,10 @@ module World =
                     Commands = []
                     Dungeon = dungeon }
         
-        (agent.Post, obs.AsObservable |> AsyncSeq.ofObservableBuffered)
+        let resultSeq =
+            obs.AsObservable
+            |> AsyncSeq.ofObservableBuffered
+            |> AsyncSeq.merge (asyncSeq { yield WaitInput })
+        (agent.Post, resultSeq)
 
     let start dungeon = init dungeon
