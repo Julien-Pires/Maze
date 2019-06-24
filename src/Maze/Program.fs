@@ -16,11 +16,15 @@ let main argv =
         } 
     }
     let game = Game.init dungeon
-    let update =
-        game.Result
-        |> AsyncSeq.iter (function
-            | WaitInput -> Console.ReadLine() |> game.Input
-            | Response x -> printfn "%s" x)
-        |> Async.RunSynchronously      
+    game.Result
+    |> AsyncSeq.iter (function
+        | UserAction action ->
+            match action with
+            | Input f -> Console.ReadLine() |> f
+        | CommandResult result ->
+            match result with
+            | CommandExecutionResult.Success x -> printfn "%s" x
+            | CommandExecutionResult.Failure x -> printfn "%s" x)
+    |> Async.RunSynchronously      
     
     0 // return an integer exit code

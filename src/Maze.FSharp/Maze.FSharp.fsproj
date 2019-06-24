@@ -3,6 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core.fs" />
     <Compile Include="Reflection.fs" />
     <Compile Include="Observable.fs" />
     <Compile Include="Async.fs" />

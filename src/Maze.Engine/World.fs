@@ -3,13 +3,18 @@
 open FSharp.Control
 open Maze.FSharp
 
-type WorldResult =
-    | WaitInput
-    | Response of string
+type CommandExecutionResult =
+    | Success of string
+    | Failure of string
+
+type UserAction =
+    | Input of (string -> unit)
+
+type WorldResponse =
+    | UserAction of UserAction
+    | CommandResult of CommandExecutionResult
 
 type WorldCommand = string
-
-type WorldResponse = WorldResult -> unit
 
 type WorldState = {
     Commands: Command list
@@ -17,7 +22,7 @@ type WorldState = {
 
 module World =
     let private init dungeon = 
-        let obs = ObservableSource()
+        let obs = ObservableSource<WorldResponse>()
         let agent =
             Agent.Start <| fun inbox ->
                 let rec loop state = async {
@@ -26,8 +31,8 @@ module World =
                     match command with
                     | Some cmd -> return! queueCommand state cmd
                     | None ->
-                        obs.OnNext <| Response "Invalid command, please retry"
-                        obs.OnNext WaitInput
+                        obs.OnNext <| CommandResult(Failure "Invalid command, please retry")
+                        obs.OnNext <| UserAction(Input(inbox.Post))
                         return! loop state }
 
                 and queueCommand state command = async {
@@ -40,9 +45,9 @@ module World =
 
                 and sendResult state result = async {
                     match (result) with
-                    | Success x -> obs.OnNext <| Response x.Message
-                    | Failure x -> obs.OnNext <| Response x
-                    obs.OnNext WaitInput
+                    | Result.Success x -> obs.OnNext <| CommandResult(Success x.Message)
+                    | Result.Failure x -> obs.OnNext <| CommandResult(Failure x)
+                    obs.OnNext <| UserAction(Input(inbox.Post))
                     return! loop state }
 
                 and explore state command = async {
@@ -51,18 +56,16 @@ module World =
                         let result = state.Dungeon |> Dungeon.move direction
                         let newState =
                             match result with
-                            | Success x -> { state with Dungeon = x.Value }
-                            | Failure _ -> state
+                            | Result.Success x -> { state with Dungeon = x.Value }
+                            | Result.Failure _ -> state
                         return! sendResult newState result }
 
                 loop {
                     Commands = []
                     Dungeon = dungeon }
         
-        let resultSeq =
-            obs.AsObservable
-            |> AsyncSeq.ofObservableBuffered
-            |> AsyncSeq.merge (asyncSeq { yield WaitInput })
-        (agent.Post, resultSeq)
+        obs.AsObservable
+        |> AsyncSeq.ofObservableBuffered
+        |> AsyncSeq.merge (asyncSeq { yield UserAction(Input(agent.Post)) })
 
     let start dungeon = init dungeon

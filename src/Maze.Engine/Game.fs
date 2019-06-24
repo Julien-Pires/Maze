@@ -1,18 +1,13 @@
 ﻿namespace Maze.Engine
 
-open System
 open FSharp.Control
-open Maze.FSharp
 
 type Input = string -> unit
 
 type Game = {
-    Input: Input
-    Result: AsyncSeq<WorldResult> }
+    Result: AsyncSeq<WorldResponse> }
 
 module Game =
     let init dungeon =
-        let (worldInput, worldObservable) = World.start dungeon
-
-        { Input = worldInput
-          Result = worldObservable }
+        let results = World.start dungeon
+        { Result = results }
