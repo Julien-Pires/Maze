@@ -2,8 +2,6 @@
 
 open FSharp.Control
 
-type Input = string -> unit
-
 type Game = {
     Result: AsyncSeq<WorldResponse> }
 

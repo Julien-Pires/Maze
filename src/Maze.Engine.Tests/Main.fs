@@ -1,4 +1,5 @@
 ﻿module MazeEngineTests
+
 open Expecto
 
 [<EntryPoint>]

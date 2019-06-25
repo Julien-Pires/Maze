@@ -19,7 +19,7 @@ module Dungeon =
             { X = position.X + movement.X 
               Y = position.Y + movement.Y }
         if Map.canMove position target dungeon.Map then 
-            Success { Value = { dungeon with Character = (character, target) }
-                      Message = "Moved succesfully" }
+            Ok { Value = { dungeon with Character = (character, target) }
+                 Message = "Moved succesfully" }
         else
-            Failure "Failed to move"
+            Error "Failed to move"

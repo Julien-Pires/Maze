@@ -21,10 +21,10 @@ let main argv =
         | UserAction action ->
             match action with
             | Input f -> Console.ReadLine() |> f
-        | CommandResult result ->
+        | Result result ->
             match result with
-            | CommandExecutionResult.Success x -> printfn "%s" x
-            | CommandExecutionResult.Failure x -> printfn "%s" x)
+            | Ok x -> printfn "%s" x
+            | Error x -> printfn "%s" x)
     |> Async.RunSynchronously      
     
     0 // return an integer exit code

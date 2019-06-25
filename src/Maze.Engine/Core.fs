@@ -12,3 +12,6 @@ type Direction =
     | Left
     | Right
     static member FromString s = fromString<Direction> s
+
+type UserAction =
+    | Input of (string -> unit)

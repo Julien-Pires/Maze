@@ -14,14 +14,14 @@ module Dungeon_Tests =
                   ({ X = 1; Y = 1 }, Backward)
                   ({ X = 1; Y = 1 }, Left)
                   ({ X = 1; Y = 1 }, Right) ]
-                ( fun (position, direction) () -> 
+                (fun (position, direction) () -> 
                     let dungeon =
                       { Character = ({ Name = "Adventurer" }, position)
                         Map = { Rooms = Map noRooms } }
                     
                     test <@ dungeon |> Dungeon.move direction
-                                    |> function | Success _ -> false
-                                                | Failure _ -> true @> )
+                                    |> function | Ok _ -> false
+                                                | Error _ -> true @>)
              
             yield!
                 testTheory "should move character position when there is a room"
@@ -29,11 +29,11 @@ module Dungeon_Tests =
                   ({ X = 1; Y = 1 }, { X = 1; Y = 0 }, Backward)
                   ({ X = 1; Y = 1 }, { X = 0; Y = 1 }, Left)
                   ({ X = 1; Y = 1 }, { X = 2; Y = 1 }, Right) ]
-                ( fun (position, target, direction) () ->
+                (fun (position, target, direction) () ->
                     let dungeon = 
                       { Character = ({ Name = "Adventurer" }, position)
                         Map = { Rooms = Map fullRooms } }
                 
                     test <@ dungeon |> Dungeon.move direction
-                                    |> function | Success x -> x.Value.Character |> snd = target
-                                                | Failure _ -> false @> ) ]
+                                    |> function | Ok x -> x.Value.Character |> snd = target
+                                                | Error _ -> false @>) ]
