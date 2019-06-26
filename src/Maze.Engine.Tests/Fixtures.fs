@@ -23,9 +23,3 @@ module Fixtures =
           ({ X = 0; Y = 2}, Empty)
           ({ X = 1; Y = 2}, Empty)
           ({ X = 2; Y = 2}, Empty) ]
-
-module Direction =
-    let up = "up"
-    let down = "down"
-    let left = "left"
-    let right = "right"
