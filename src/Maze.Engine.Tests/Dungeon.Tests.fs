@@ -24,8 +24,8 @@ module Dungeon_Tests =
                         Map = emptyMap }
                     
                     test <@ dungeon |> Dungeon.move direction
-                                    |> function | Ok _ -> false
-                                                | Error _ -> true @>)
+                                    |> fun c -> snd <| c.Value.Character
+                                    |> ((=) position) @>)
              
             yield!
                 testTheory "should move character position when there is a room"
@@ -39,5 +39,5 @@ module Dungeon_Tests =
                         Map = fullMap }
                 
                     test <@ dungeon |> Dungeon.move direction
-                                    |> function | Ok x -> x.Value.Character |> snd = target
-                                                | Error _ -> false @>) ]
+                                    |> fun c -> snd <| c.Value.Character
+                                    |> ((=) target) @>) ]
