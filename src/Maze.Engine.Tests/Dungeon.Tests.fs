@@ -7,6 +7,10 @@ open Maze.Engine
 module Dungeon_Tests =
     [<Tests>]
     let moveTests =
+        let emptyMap = 
+            { Rooms = Map(noRooms) }
+        let fullMap =
+            { Rooms = Map(withRooms) }
         testList "Dungeon/Move command" [
             yield!
                 testTheory "should not move character position when there is no room"
@@ -17,7 +21,7 @@ module Dungeon_Tests =
                 (fun (position, direction) () -> 
                     let dungeon =
                       { Character = ({ Name = "Adventurer" }, position)
-                        Map = { Rooms = Map noRooms } }
+                        Map = emptyMap }
                     
                     test <@ dungeon |> Dungeon.move direction
                                     |> function | Ok _ -> false
@@ -32,7 +36,7 @@ module Dungeon_Tests =
                 (fun (position, target, direction) () ->
                     let dungeon = 
                       { Character = ({ Name = "Adventurer" }, position)
-                        Map = { Rooms = Map fullRooms } }
+                        Map = fullMap }
                 
                     test <@ dungeon |> Dungeon.move direction
                                     |> function | Ok x -> x.Value.Character |> snd = target

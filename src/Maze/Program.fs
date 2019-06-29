@@ -9,10 +9,10 @@ let main argv =
         Character = { Name = "Indiana Jones"}, { X = 0; Y = 0 }
         Map = {
             Rooms = Map.ofList <| [
-                ({ X = 0; Y = 0 }, Empty) 
-                ({ X = 0; Y = 1 }, Empty) 
-                ({ X = 0; Y = 2 }, Empty)
-                ({ X = 0; Y = 3 }, Empty) ] 
+                ({ X = 0; Y = 0 }, { Type = Normal }) 
+                ({ X = 0; Y = 1 }, { Type = Normal }) 
+                ({ X = 0; Y = 2 }, { Type = Normal })
+                ({ X = 0; Y = 3 }, { Type = Normal }) ] 
         } 
     }
     let game = Game.init dungeon
