@@ -3,10 +3,6 @@
 open FSharp.Control
 open Maze.FSharp
 
-type WorldResponse =
-    | UserAction of UserAction
-    | Result of CommandExecutionResult
-
 type WorldCommand = string
 
 type WorldState = {
@@ -15,43 +11,55 @@ type WorldState = {
 
 module World =
     let private init dungeon = 
-        let obs = ObservableSource<WorldResponse>()
+        let obs = ObservableSource<OutputCommand>()
         let agent =
             Agent.Start <| fun inbox ->
                 let rec loop state = async {
                     let! msg = inbox.Receive()
                     let command = CommandsParser.parse msg
-                    match command with
-                    | Some cmd -> return! queueCommand state cmd
-                    | None ->
-                        obs.OnNext <| Result(Error "Invalid command, please retry")
-                        obs.OnNext <| UserAction(Input inbox.Post)
-                        return! loop state }
+                    let commands =
+                        match command with
+                        | Some x -> [ Input x ]
+                        | None ->
+                            [ Output <| Response "Invalid command, please retry"
+                              Output <| UserAction(UserAction.Input(inbox.Post)) ]
+                    return! stackCommands state commands }
 
-                and queueCommand state command = async {
-                    return! dequeueCommand { state with Commands = command::state.Commands} }
+                and stackCommands state commands = async {
+                    return! processCommands {
+                        state with 
+                            Commands = commands |> List.append state.Commands } }
 
-                and dequeueCommand state = async {
+                and processCommands state = async {
                     match state.Commands with
-                    | head::tail -> return! explore { state with Commands = tail } head
+                    | head::tail ->
+                        match head with
+                        | Input x -> return! explore { state with Commands = tail } x
+                        | Output x -> return! sendResponse { state with Commands = tail } x
                     | [] -> return! loop state }
 
-                and sendResult state result = async {
-                    match (result) with
-                    | Ok x -> obs.OnNext <| Result(Ok x.Message)
-                    | Error x -> obs.OnNext <| Result(Error x)
-                    obs.OnNext <| UserAction(Input inbox.Post)
-                    return! loop state }
+                and sendResponse state response = async {
+                    obs.OnNext response
+                    return! processCommands state }
 
                 and explore state command = async {
                     match command with
                     | Move direction ->
                         let result = state.Dungeon |> Dungeon.move direction
-                        let newState =
-                            match result with
-                            | Ok x -> { state with Dungeon = x.Value }
-                            | Error _ -> state
-                        return! sendResult newState result }
+                        let newState = { state with Dungeon = result.Value }
+                        let commands = 
+                            [ Output <| Response result.Message
+                              Output <| UserAction(UserAction.Input(inbox.Post)) ]
+                        return! stackCommands newState commands
+                    | Exit ->
+                        let commands =
+                            if state.Dungeon |> Dungeon.canLeave then 
+                                [ Output <| Response "You leave the dungeon successfully" ]
+                            else
+                                [ Output <| Response "You cannot leave the dungeon"
+                                  Output <| UserAction(UserAction.Input(inbox.Post)) ]
+                        return! stackCommands state commands
+                    | _ -> return! processCommands state }
 
                 loop {
                     Commands = []
@@ -59,6 +67,6 @@ module World =
         
         obs.AsObservable
         |> AsyncSeq.ofObservableBuffered
-        |> AsyncSeq.merge (asyncSeq { yield UserAction <| Input(agent.Post) })
+        |> AsyncSeq.merge (asyncSeq { yield UserAction(UserAction.Input(agent.Post)) })
 
     let start dungeon = init dungeon

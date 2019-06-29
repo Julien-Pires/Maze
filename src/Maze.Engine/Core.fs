@@ -2,6 +2,8 @@
 
 open Maze.FSharp
 
+type Message = string
+
 type Position = {
     X: int
     Y: int }
@@ -12,6 +14,3 @@ type Direction =
     | Left
     | Right
     static member FromString s = fromString<Direction> s
-
-type UserAction =
-    | Input of (string -> unit)

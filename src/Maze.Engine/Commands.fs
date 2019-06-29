@@ -1,13 +1,21 @@
 namespace Maze.Engine
 
-type Command =
+type UserAction =
+    | Input of (string -> unit)
+
+type InputCommand =
     | Move of Direction
+    | Exit
     | GetPosition of AsyncReplyChannel<Position>
 
-type Message = string
+type OutputCommand =
+    | UserAction of UserAction
+    | Response of Message
+
+type Command =
+    | Input of InputCommand
+    | Output of OutputCommand
 
 type CommandResult<'a> = {
     Value: 'a
     Message: Message }
-
-type CommandExecutionResult = Result<string, string>

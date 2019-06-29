@@ -3,9 +3,9 @@
 open FSharp.Control
 
 type Game = {
-    Result: AsyncSeq<WorldResponse> }
+    Responses: AsyncSeq<OutputCommand> }
 
 module Game =
     let init dungeon =
-        let results = World.start dungeon
-        { Result = results }
+        let responsesSeq = World.start dungeon
+        { Responses = responsesSeq }

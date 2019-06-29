@@ -2,12 +2,14 @@
 
 open System
 
-type Room =
-    | Void
-    | Empty
-    | Exit
+type RoomType =
+    | Normal
+    | Entrance
 
-type Rooms = (Position * Room) list
+type Room = {
+    Type: RoomType }
+
+type Rooms = Room list
 
 type Map = {
     Rooms: Map<Position, Room> }
@@ -21,6 +23,10 @@ module Map =
         | x when x > 1 -> false
         | _ ->
             match map.Rooms |> Map.tryFind target with
-            | Some Void -> false
             | Some _ -> true
             | _ -> false
+    
+    let hasReachedExit position map =
+        match map.Rooms |> Map.tryFind position with
+        | Some x -> x.Type = Entrance
+        | None -> false

@@ -1,7 +1,5 @@
 ﻿namespace Maze.Engine
 
-open Maze.FSharp
-
 type Dungeon = {
     Character: Character * Position
     Map: Map }
@@ -18,8 +16,17 @@ module Dungeon =
         let target =
             { X = position.X + movement.X 
               Y = position.Y + movement.Y }
-        if Map.canMove position target dungeon.Map then 
-            Ok { Value = { dungeon with Character = (character, target) }
-                 Message = "Moved succesfully" }
+        if dungeon.Map |> Map.canMove position target then
+            let message =
+                if dungeon.Map |> Map.hasReachedExit target then 
+                    "You moved to a new room, you can exit the dungeon"
+                else 
+                    "You moved to a new room"
+            { Value = { dungeon with Character = (character, target) }
+              Message = message }
         else
-            Error "Failed to move"
+            { Value = dungeon
+              Message = "You cannot move further" }
+
+    let canLeave dungeon =
+        dungeon.Map |> Map.hasReachedExit (snd dungeon.Character)    
