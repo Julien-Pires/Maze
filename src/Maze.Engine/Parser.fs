@@ -12,6 +12,7 @@ module CommandsParser =
             match direction |> Direction.FromString with
             | Some x -> Move x |> Some
             | None -> None
+        | ["exit"] -> Some Exit
         | _ -> None
 
     let parseWord : Parser<_> =

@@ -17,7 +17,16 @@ module Dungeon =
             { X = position.X + movement.X 
               Y = position.Y + movement.Y }
         if dungeon.Map |> Map.canMove position target then
-            Ok { Value = { dungeon with Character = (character, target) }
-                 Message = "Moved succesfully" }
+            let message =
+                if dungeon.Map |> Map.hasReachedExit target then 
+                    "You moved to a new room, you can exit the dungeon"
+                else 
+                    "You moved to a new room"
+            { Value = { dungeon with Character = (character, target) }
+              Message = message }
         else
-            Error "Failed to move"
+            { Value = dungeon
+              Message = "You cannot move further" }
+
+    let canLeave dungeon =
+        dungeon.Map |> Map.hasReachedExit (snd dungeon.Character)    
