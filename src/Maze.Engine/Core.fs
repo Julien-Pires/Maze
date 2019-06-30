@@ -13,4 +13,3 @@ type Direction =
     | Backward
     | Left
     | Right
-    static member FromString s = fromString<Direction> s
