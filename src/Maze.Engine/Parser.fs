@@ -2,17 +2,28 @@
 
 open System
 open FParsec
+open Maze.FSharp
 
 type Parser<'a> = Parser<'a, unit>
 
 module CommandsParser =
+    let (|IsDirection|_|) = function
+        | [ direction ] ->
+            match direction |> fromString<Direction> true with
+            | Some x -> Some x
+            | None ->
+                match direction.ToLower() with
+                | "f" -> Some Forward
+                | "b" -> Some Backward
+                | "l" -> Some Left
+                | "r" -> Some Right
+                | _ -> None
+        | _ -> None
+
     let convert inputs =
         match inputs with
-        | ["move"; direction] ->
-            match direction |> Direction.FromString with
-            | Some x -> Move x |> Some
-            | None -> None
-        | ["exit"] -> Some Exit
+        | IsDirection direction -> Some <| Move direction
+        | [ "exit" ] -> Some Exit
         | _ -> None
 
     let parseWord : Parser<_> =
