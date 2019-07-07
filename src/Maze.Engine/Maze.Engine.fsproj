@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
@@ -16,9 +16,16 @@
     <Compile Include="Map.fs" />
     <Compile Include="Dungeon.fs" />
     <Compile Include="World.fs" />
+    <Compile Include="Data.fs" />
     <Compile Include="Game.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FParsec" Version="1.0.3" />
+    <PackageReference Include="FSharp.Data" Version="3.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Templates/Dungeon_Template.json">
+      <Link>Templates/Dungeon_Template.json</Link>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

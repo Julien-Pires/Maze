@@ -17,3 +17,11 @@ module Reflection =
         match cases with
         |[|case|] -> Some(FSharpValue.MakeUnion(case,[||]) :?> 'a)
         |_ -> None
+        
+    let unsafeFromString<'a> ignoreCase (s: string) =
+        FSharpType.GetUnionCases typeof<'a>
+        |> Array.filter (fun case -> 
+            if ignoreCase then case.Name.ToLower() = s.ToLower()
+            else case.Name = s)
+        |> Array.head
+        |> fun c -> (FSharpValue.MakeUnion(c, [||]) :?> 'a)

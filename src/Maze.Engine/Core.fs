@@ -1,7 +1,5 @@
 ﻿namespace Maze.Engine
 
-open Maze.FSharp
-
 type Message = string
 
 type Position = {
