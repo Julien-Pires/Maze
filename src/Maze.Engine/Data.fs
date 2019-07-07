@@ -6,8 +6,8 @@ open Maze.FSharp
 type DungeonProvider = JsonProvider<"Templates/Dungeon_Template.json">
 
 module Data =
-    let loadMap (getText: unit -> Async<Result<string, string>>) = async {
-        let! result = getText()
+    let loadMap (getText: Async<Result<string, string>>) = async {
+        let! result = getText
         match result with
         | Ok text ->
             try

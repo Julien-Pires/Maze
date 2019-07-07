@@ -1,21 +1,14 @@
 ﻿open System
 open FSharp.Control
+open Maze
 open Maze.Engine
 
 [<EntryPoint>]
 let main argv =
-    let dungeon = {
-        Character = { Name = "Indiana Jones"}, { X = 0; Y = 0 }
-        Map = {
-            Rooms = Map.ofList <| [
-                ({ X = 0; Y = 0 }, { Type = Normal }) 
-                ({ X = 0; Y = 1 }, { Type = Normal }) 
-                ({ X = 0; Y = 2 }, { Type = Normal })
-                ({ X = 0; Y = 3 }, { Type = Normal })
-                ({ X = 0; Y = 4 }, { Type = Entrance }) ] 
-        } 
-    }
-    let game = Game.init dungeon
+    let map = Input.readUntil
+                   "Please enter the path to the file that contains the dungeon to explore:"
+                   (IO.readTextAsync >> (Data.loadMap >> Async.RunSynchronously))
+    let game = Game.init map
     game.Responses
     |> AsyncSeq.iter (function
         | UserAction action ->

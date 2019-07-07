@@ -21,7 +21,7 @@ module Data_Tests =
                 yield
                     testCase "should return error when data is bad formatted" <|
                         fun _ ->
-                            let loadData = fun () -> async { return Ok badData }
+                            let loadData = async { return Ok badData }
                             let result = Data.loadMap loadData |> Async.RunSynchronously
                             
                             test <@ result |> function | Ok _ -> false
@@ -30,7 +30,7 @@ module Data_Tests =
                 yield
                     testCase "should return an empty map when data contains no rooms" <|
                         fun _ ->
-                            let loadData = fun () -> async { return Ok noRoomsData }
+                            let loadData = async { return Ok noRoomsData }
                             let result = Data.loadMap loadData |> Async.RunSynchronously
                             
                             test <@ result |> function | Ok x -> x = { Rooms = Map.empty<Position, Room> }
@@ -44,10 +44,9 @@ module Data_Tests =
                                 |> List.map (fun c -> (c.Position, { Type = unsafeFromString<RoomType> false c.Type }))
                                 |> fun c -> { Map.Rooms = c |> Map.ofList }
                             let text = JsonConvert.SerializeObject({ Rooms = rooms })
-                            let loadData = fun () -> async { return Ok text }
+                            let loadData = async { return Ok text }
                             let result = Data.loadMap loadData |> Async.RunSynchronously
                             
-                            result |> function | Ok x -> x = expected
-                                               | Error _ -> false
-                                   |> Expect.isTrue
+                            test <@ result |> function | Ok x -> x = expected
+                                                       | Error _ -> false @>
             ]
