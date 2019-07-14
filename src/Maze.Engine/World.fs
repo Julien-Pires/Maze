@@ -22,7 +22,7 @@ module World =
                         | Some x -> [ Input x ]
                         | None ->
                             [ Output <| Response "Invalid command, please retry"
-                              Output <| UserAction(UserAction.Input(inbox.Post)) ]
+                              Output <| UserAction(UserAction.Input) ]
                     return! stackCommands state commands }
 
                 and stackCommands state commands = async {
@@ -49,7 +49,7 @@ module World =
                         let newState = { state with Dungeon = result.Value }
                         let commands = 
                             [ Output <| Response result.Message
-                              Output <| UserAction(UserAction.Input(inbox.Post)) ]
+                              Output <| UserAction(UserAction.Input) ]
                         return! stackCommands newState commands
                     | Exit ->
                         let commands =
@@ -57,7 +57,7 @@ module World =
                                 [ Output <| Response "You leave the dungeon successfully" ]
                             else
                                 [ Output <| Response "You cannot leave the dungeon"
-                                  Output <| UserAction(UserAction.Input(inbox.Post)) ]
+                                  Output <| UserAction(UserAction.Input) ]
                         return! stackCommands state commands
                     | _ -> return! processCommands state }
 
@@ -67,6 +67,6 @@ module World =
         
         obs.AsObservable
         |> AsyncSeq.ofObservableBuffered
-        |> AsyncSeq.merge (asyncSeq { yield UserAction(UserAction.Input(agent.Post)) })
+        |> AsyncSeq.merge (asyncSeq { yield UserAction(UserAction.Input) })
 
     let start dungeon = init dungeon

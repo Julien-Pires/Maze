@@ -1,15 +1,33 @@
 ﻿namespace Maze.Engine
 
 open FSharp.Control
+open Maze.FSharp
 
 type Game = {
-    Responses: AsyncSeq<OutputCommand> }
+    Responses: Channel<string, OutputCommand>
+}
+
+type GameStatus = {
+    Context : IGameContext
+}
 
 module Game =
-    let init map =
-        let dungeon = {
-            Character = { Name = "Indiana Jones"}, { X = 0; Y = 0 }
-            Map = map
-        }
-        let responsesSeq = World.start dungeon
-        { Responses = responsesSeq }
+    let start () =
+        let contextOutput = Channel.create<GameCommand<_>>()
+        let gameOutput = Channel.create<OutputCommand>()
+        let playerInput = Channel.create<string>()
+        let status = { Context = Title.init contextOutput }
+        
+        contextOutput.Output
+        |> AsyncSeq.iter (fun cmd ->
+            match cmd with
+            | Switch _ -> ()
+            | GameCommand.Output out -> gameOutput.Input out)
+        |> Async.Start
+        
+        playerInput.Output
+        |> AsyncSeq.iter (fun c ->
+            status.Context.Update c)
+        |> Async.Start
+
+        Channel.createFrom playerInput gameOutput

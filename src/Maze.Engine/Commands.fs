@@ -1,7 +1,9 @@
 namespace Maze.Engine
 
+open Maze.Engine
+
 type UserAction =
-    | Input of (string -> unit)
+    | Input
 
 type InputCommand =
     | Move of Direction
@@ -11,6 +13,10 @@ type InputCommand =
 type OutputCommand =
     | UserAction of UserAction
     | Response of Message
+
+type GameCommand<'a> =
+    | Output of OutputCommand
+    | Switch of (Channel<'a, 'a> -> IGameContext)
 
 type Command =
     | Input of InputCommand

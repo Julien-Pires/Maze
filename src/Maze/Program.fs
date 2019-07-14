@@ -1,19 +1,15 @@
 ﻿open System
 open FSharp.Control
-open Maze
 open Maze.Engine
 
 [<EntryPoint>]
 let main argv =
-    let map = Input.readUntil
-                   "Please enter the path to the file that contains the dungeon to explore:"
-                   (IO.readTextAsync >> (Data.loadMap >> Async.RunSynchronously))
-    let game = Game.init map
-    game.Responses
+    let game = Game.start()
+    game.Output
     |> AsyncSeq.iter (function
         | UserAction action ->
             match action with
-            | UserAction.Input f -> Console.ReadLine() |> f
+            | UserAction.Input -> Console.ReadLine() |> game.Input
         | Response message -> printfn "%s" message)
     |> Async.RunSynchronously      
     

@@ -11,6 +11,7 @@
     <Compile Include="Expecto.fs" />
     <Compile Include="Fixtures.fs" />
     <Compile Include="Gen.fs" />
+    <Compile Include="Channel.Tests.fs" />
     <Compile Include="Commands.Tests.fs" />
     <Compile Include="Map.Tests.fs" />
     <Compile Include="Dungeon.Tests.fs" />

@@ -11,3 +11,6 @@ type Direction =
     | Backward
     | Left
     | Right
+    
+type IGameContext =
+    abstract member Update : string -> unit

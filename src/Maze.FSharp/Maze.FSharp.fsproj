@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core.fs" />
+    <Compile Include="IO.fs" />
     <Compile Include="Reflection.fs" />
     <Compile Include="Observable.fs" />
     <Compile Include="Async.fs" />

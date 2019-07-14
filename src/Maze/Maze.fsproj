@@ -7,8 +7,6 @@
     <ProjectReference Include="..\Maze.Engine\Maze.Engine.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Input.fs" />
-    <Compile Include="IO.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
