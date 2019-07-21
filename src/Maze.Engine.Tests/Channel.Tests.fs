@@ -6,13 +6,44 @@ open Swensen.Unquote
 open Maze.Engine
 
 module Channel_Tests =
+    let config = FsCheckConfig.defaultConfig
+    
     [<Tests>]
-    let channelTests =
-        testList "Channel/Output" [
+    let channelCreateTests =
+        testList "Channel/create" [
             yield
-                testCase "should return an empty seq when no element has been passed to the channel" <|
-                    fun _ ->
+                testPropertyWithConfig config "should create a channel that return the same value passed to the channel" <|
+                    fun (value : int) ->
                         let sut = Channel.create()
+                        let result = async {
+                            do sut.Post value
+                            return! sut.Receive() } |> Async.RunSynchronously
                         
-                        test <@ sut.Output |> AsyncSeq.toList |> List.isEmpty @>
+                        test <@ result = value @>
+        ]
+        
+    [<Tests>]
+    let channelCreateFromTests =
+        testList "Channel/createFrom" [
+            yield
+                testPropertyWithConfig config "should create a channel that post value to another channel" <|
+                    fun (value : int) ->
+                        let channel = Channel.create<_>()
+                        let sut = Channel.createFrom channel channel
+                        let result = async {
+                            do sut.Post value
+                            return! channel.Receive() } |> Async.RunSynchronously
+                        
+                        test <@ result = value @>
+                        
+            yield
+                testPropertyWithConfig config "should create a channel that receive value from another channel" <|
+                    fun (value : int) ->
+                        let channel = Channel.create<_>()
+                        let sut = Channel.createFrom channel channel
+                        let result = async {
+                            do channel.Post value
+                            return! sut.Receive() } |> Async.RunSynchronously
+                        
+                        test <@ result = value @>
         ]

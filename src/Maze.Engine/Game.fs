@@ -18,16 +18,23 @@ module Game =
         let playerInput = Channel.create<string>()
         let status = { Context = Title.init contextOutput }
         
-        contextOutput.Output
-        |> AsyncSeq.iter (fun cmd ->
-            match cmd with
+        let rec gameLoop () = async {
+            let! command = contextOutput.Receive()
+            match command with
             | Switch _ -> ()
-            | GameCommand.Output out -> gameOutput.Input out)
-        |> Async.Start
+            | GameCommand.Output out -> gameOutput.Post out
+            
+            return! gameLoop()
+        }
         
-        playerInput.Output
-        |> AsyncSeq.iter (fun c ->
-            status.Context.Update c)
-        |> Async.Start
+        let rec playerLoop () = async {
+            let! input = playerInput.Receive()
+            status.Context.Update input
+            
+            return! playerLoop()
+        }
+        
+        gameLoop() |> Async.Start
+        playerLoop() |> Async.Start
 
         Channel.createFrom playerInput gameOutput
