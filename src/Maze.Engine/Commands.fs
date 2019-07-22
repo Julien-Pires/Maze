@@ -2,25 +2,24 @@ namespace Maze.Engine
 
 open Maze.Engine
 
-type UserAction =
+type PlayerAction =
     | Input
 
-type InputCommand =
+type PlayerResponse =
+    | Entry of string
+
+type GameAction =
     | Move of Direction
     | Exit
     | GetPosition of AsyncReplyChannel<Position>
 
-type OutputCommand =
-    | UserAction of UserAction
-    | Response of Message
+type GameResponse =
+    | Action of PlayerAction
+    | Message of Message
 
 type GameCommand<'a> =
-    | Output of OutputCommand
+    | Response of GameResponse
     | Switch of (Channel<'a, 'a> -> IGameContext)
-
-type Command =
-    | Input of InputCommand
-    | Output of OutputCommand
 
 type CommandResult<'a> = {
     Value: 'a

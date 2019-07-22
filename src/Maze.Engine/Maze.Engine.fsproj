@@ -11,8 +11,8 @@
   <ItemGroup>
     <Compile Include="Core.fs" />
     <Compile Include="Channel.fs" />
-    <Compile Include="Player.fs" />
     <Compile Include="Commands.fs" />
+    <Compile Include="Player.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Map.fs" />
     <Compile Include="Data.fs" />

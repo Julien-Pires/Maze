@@ -3,15 +3,17 @@
 open FSharp.Control
 open Maze.FSharp
 
-type WorldCommand = string
+type WorldCommand =
+    | Output of GameResponse
+    | Input of GameAction
 
 type WorldState = {
-    Commands: Command list
+    Commands: WorldCommand list
     Dungeon: Dungeon }
 
 module World =
     let private init dungeon = 
-        let obs = ObservableSource<OutputCommand>()
+        let obs = ObservableSource<GameResponse>()
         let agent =
             Agent.Start <| fun inbox ->
                 let rec loop state = async {
@@ -21,8 +23,8 @@ module World =
                         match command with
                         | Some x -> [ Input x ]
                         | None ->
-                            [ Output <| Response "Invalid command, please retry"
-                              Output <| UserAction(UserAction.Input) ]
+                            [ Output <| Message "Invalid command, please retry"
+                              Output <| Action(PlayerAction.Input) ]
                     return! stackCommands state commands }
 
                 and stackCommands state commands = async {
@@ -48,16 +50,16 @@ module World =
                         let result = state.Dungeon |> Dungeon.move direction
                         let newState = { state with Dungeon = result.Value }
                         let commands = 
-                            [ Output <| Response result.Message
-                              Output <| UserAction(UserAction.Input) ]
+                            [ Output <| Message result.Message
+                              Output <| Action(PlayerAction.Input) ]
                         return! stackCommands newState commands
                     | Exit ->
                         let commands =
                             if state.Dungeon |> Dungeon.canLeave then 
-                                [ Output <| Response "You leave the dungeon successfully" ]
+                                [ Output <| Message "You leave the dungeon successfully" ]
                             else
-                                [ Output <| Response "You cannot leave the dungeon"
-                                  Output <| UserAction(UserAction.Input) ]
+                                [ Output <| Message "You cannot leave the dungeon"
+                                  Output <| Action(PlayerAction.Input) ]
                         return! stackCommands state commands
                     | _ -> return! processCommands state }
 
@@ -67,6 +69,6 @@ module World =
         
         obs.AsObservable
         |> AsyncSeq.ofObservableBuffered
-        |> AsyncSeq.merge (asyncSeq { yield UserAction(UserAction.Input) })
+        |> AsyncSeq.merge (asyncSeq { yield Action(PlayerAction.Input) })
 
     let start dungeon = init dungeon

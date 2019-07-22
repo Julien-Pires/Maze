@@ -9,10 +9,10 @@ let main _ =
         let rec loop () = async {
             let! result = game.Receive()
             match result with
-            | UserAction action ->
+            | Action action ->
                 match action with
-                | UserAction.Input -> game.Post <| Console.ReadLine()
-            | Response message -> printfn "%s" message
+                | Input -> game.Post <| Entry(Console.ReadLine())
+            | Message msg -> printfn "%s" msg
             
             return! loop()
         }
