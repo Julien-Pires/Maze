@@ -12,13 +12,13 @@
     <Compile Include="Core.fs" />
     <Compile Include="Channel.fs" />
     <Compile Include="Commands.fs" />
-    <Compile Include="Player.fs" />
     <Compile Include="Parser.fs" />
+    <Compile Include="Player.fs" />
+    <Compile Include="World.fs" />
     <Compile Include="Map.fs" />
     <Compile Include="Data.fs" />
     <Compile Include="Dungeon.fs" />
     <Compile Include="Title.fs" />
-    <Compile Include="World.fs" />
     <Compile Include="Game.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,9 +17,9 @@ type GameResponse =
     | Action of PlayerAction
     | Message of Message
 
-type GameCommand<'a> =
+type GameCommand =
     | Response of GameResponse
-    | Switch of (Channel<'a, 'a> -> IGameContext)
+    | Switch of (Channel<PlayerResponse, GameCommand> -> Async<unit>)
 
 type CommandResult<'a> = {
     Value: 'a

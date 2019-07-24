@@ -3,24 +3,33 @@ namespace Maze.Engine
 open System.Threading
 open FSharp.Control
 
-type ChannelPost<'a> = 'a -> unit
+type Post<'a> = 'a -> unit
+type Receive<'a> = unit -> Async<'a>
 
-type ChannelReceive<'a> = unit -> Async<'a>
-
-type Channel<'a ,'b> = {
-    Post : ChannelPost<'a>
-    Receive : ChannelReceive<'b>
+type Socket<'a, 'b> = {
+    Post : Post<'a>
+    Receive : Receive<'b>
 }
-    
+
+type Channel<'a, 'b> = {
+    EndpointA : Socket<'a, 'b>
+    EndpointB : Socket<'b, 'a>
+    Close : unit -> unit
+}
+
 module Channel =
-    let create<'a> () : Channel<'a, 'a> =
+    let create<'a, 'b> () =
         let cts = new CancellationTokenSource()
-        let agent = MailboxProcessor<'a>.Start((fun _ -> async.Return()), cancellationToken = cts.Token)
+        let socketA = MailboxProcessor<'a>.Start((fun _ -> async.Return()), cancellationToken = cts.Token)
+        let socketB = MailboxProcessor<'b>.Start((fun _ -> async.Return()), cancellationToken = cts.Token)
         {
-            Post = fun c -> agent.Post c
-            Receive = fun _ -> agent.Receive()
+            EndpointA = {
+                Post = fun c -> socketA.Post c
+                Receive = fun _ -> socketB.Receive()
+            }
+            EndpointB = {
+                Post = fun c -> socketB.Post c
+                Receive = fun _ -> socketA.Receive()
+            }
+            Close = fun _ -> cts.Cancel()
         }
-    
-    let createFrom inputChannel outputChannel =
-        { Post = inputChannel.Post
-          Receive = outputChannel.Receive }

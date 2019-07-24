@@ -12,38 +12,22 @@ module Channel_Tests =
     let channelCreateTests =
         testList "Channel/create" [
             yield
-                testPropertyWithConfig config "should create a channel that return the same value passed to the channel" <|
+                testPropertyWithConfig config "should create a channel that sends value from endpoint A to B" <|
                     fun (value : int) ->
                         let sut = Channel.create()
                         let result = async {
-                            do sut.Post value
-                            return! sut.Receive() } |> Async.RunSynchronously
-                        
-                        test <@ result = value @>
-        ]
-        
-    [<Tests>]
-    let channelCreateFromTests =
-        testList "Channel/createFrom" [
-            yield
-                testPropertyWithConfig config "should create a channel that post value to another channel" <|
-                    fun (value : int) ->
-                        let channel = Channel.create<_>()
-                        let sut = Channel.createFrom channel channel
-                        let result = async {
-                            do sut.Post value
-                            return! channel.Receive() } |> Async.RunSynchronously
+                            do sut.EndpointA.Post value
+                            return! sut.EndpointB.Receive() } |> Async.RunSynchronously
                         
                         test <@ result = value @>
                         
             yield
-                testPropertyWithConfig config "should create a channel that receive value from another channel" <|
+                testPropertyWithConfig config "should create a channel that sends value from endpoint B to A" <|
                     fun (value : int) ->
-                        let channel = Channel.create<_>()
-                        let sut = Channel.createFrom channel channel
+                        let sut = Channel.create()
                         let result = async {
-                            do channel.Post value
-                            return! sut.Receive() } |> Async.RunSynchronously
+                            do sut.EndpointB.Post value
+                            return! sut.EndpointA.Receive() } |> Async.RunSynchronously
                         
                         test <@ result = value @>
         ]
