@@ -3,10 +3,9 @@ namespace Maze.Engine.Tests
 open FsCheck
 open Maze.Engine
 
-type Room = {
-    Position : Position
-    Type : string
-}
+type Room =
+    { Position: Position
+      Type: string }
 
 type RoomsGen() =
     static member Rooms() : Arbitrary<Room list> =

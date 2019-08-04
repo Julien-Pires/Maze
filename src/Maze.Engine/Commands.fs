@@ -1,7 +1,5 @@
 namespace Maze.Engine
 
-open Maze.Engine
-
 type PlayerAction =
     | Input
 
@@ -21,6 +19,6 @@ type GameCommand =
     | SendResponse of GameResponse
     | ChangeWorld of (Socket<GameCommand, PlayerResponse> -> Async<unit>)
 
-type CommandResult<'a> = {
-    Value: 'a
-    Message: Message }
+type CommandResult<'a> =
+    { Value: 'a
+      Message: Message }

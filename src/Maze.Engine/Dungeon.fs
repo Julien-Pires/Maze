@@ -1,8 +1,8 @@
 ﻿namespace Maze.Engine
 
-type Dungeon = {
-    Character: Character * Position
-    Map: Map }
+type Dungeon =
+    { Character: Character * Position
+      Map: Map }
 
 module Dungeon =
     let move direction position map =
@@ -32,34 +32,39 @@ module Dungeon =
         
     let init map character channel =
         channel.Post <| SendResponse(Message "Welcome to the dungeon")
-        let rec waitUser state = async {
-            channel.Post <| SendResponse(Action(PlayerAction.Input))
-            let! msg = channel.Receive()
-            match msg with
-            | Entry text ->
-                let command = CommandsParser.parse text
-                match command with
-                | Some x -> return! explore state x
-                | None ->
-                    channel.Post <| SendResponse(Message "Invalid command, please retry")
-                    return! waitUser state }
+        
+        let rec waitUser state =
+            async {
+                channel.Post <| SendResponse(Action(PlayerAction.Input))
+                let! msg = channel.Receive()
+                match msg with
+                | Entry text ->
+                    let command = CommandsParser.parse text
+                    match command with
+                    | Some x -> return! explore state x
+                    | None ->
+                        channel.Post <| SendResponse(Message "Invalid command, please retry")
+                        return! waitUser state
+            }
 
-        and explore state command = async {
-            let newState = 
-                match command with
-                | Move direction ->
-                    let (character, position) = state.Character
-                    let newPosition = move direction position state.Map
-                    channel.Post <| SendResponse(Message newPosition.Message)
-                    { state with Character = (character, newPosition.Value) }
-                | Exit ->
-                    if state.Map |> canLeave (snd state.Character) then 
-                        channel.Post <| SendResponse(Message "You leave the dungeon successfully")
-                    else
-                        channel.Post <| SendResponse(Message "You cannot leave the dungeon")
-                    state
-                | _ -> state
-            return! waitUser newState }
+        and explore state command =
+            async {
+                let newState = 
+                    match command with
+                    | Move direction ->
+                        let (character, position) = state.Character
+                        let newPosition = move direction position state.Map
+                        channel.Post <| SendResponse(Message newPosition.Message)
+                        { state with Character = (character, newPosition.Value) }
+                    | Exit ->
+                        if state.Map |> canLeave (snd state.Character) then 
+                            channel.Post <| SendResponse(Message "You leave the dungeon successfully")
+                        else
+                            channel.Post <| SendResponse(Message "You cannot leave the dungeon")
+                        state
+                    | _ -> state
+                return! waitUser newState
+            }
 
         waitUser {
             Character = character

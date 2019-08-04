@@ -3,9 +3,8 @@
 open System.Threading
 open Maze.FSharp
 
-type World = {
-    Exit : unit -> unit
-}
+type World =
+    { Exit: unit -> unit }
 
 module World =
     let create world channel =
