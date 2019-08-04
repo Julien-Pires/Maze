@@ -16,7 +16,6 @@ module Title =
                     | Ok map ->
                         let character = ({ Name = "Player" }, { X = 0; Y = 0 })
                         channel.Post (ChangeWorld <| Dungeon.init map character)
-                        return ()
                     | Error err ->
                         channel.Post (SendResponse <| Message err)
                         return! loop()
