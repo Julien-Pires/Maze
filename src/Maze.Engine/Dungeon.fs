@@ -30,17 +30,19 @@ module Dungeon =
     let canLeave position map =
         map |> Map.hasReachedExit position
         
-    let init map character channel = 
+    let init map character channel =
+        channel.Post <| SendResponse(Message "Welcome to the dungeon")
         let rec waitUser state = async {
-            channel.Post <| Action(PlayerAction.Input)
+            channel.Post <| SendResponse(Action(PlayerAction.Input))
             let! msg = channel.Receive()
-            let command = CommandsParser.parse msg
-            match command with
-            | Some x -> return! explore state x
-            | None ->
-                channel.Post <| Message "Invalid command, please retry"
-                channel.Post <| Action(PlayerAction.Input)
-                return! waitUser state }
+            match msg with
+            | Entry text ->
+                let command = CommandsParser.parse text
+                match command with
+                | Some x -> return! explore state x
+                | None ->
+                    channel.Post <| SendResponse(Message "Invalid command, please retry")
+                    return! waitUser state }
 
         and explore state command = async {
             let newState = 
@@ -48,13 +50,13 @@ module Dungeon =
                 | Move direction ->
                     let (character, position) = state.Character
                     let newPosition = move direction position state.Map
-                    channel.Post <| Message newPosition.Message
+                    channel.Post <| SendResponse(Message newPosition.Message)
                     { state with Character = (character, newPosition.Value) }
                 | Exit ->
                     if state.Map |> canLeave (snd state.Character) then 
-                        channel.Post <| Message "You leave the dungeon successfully"
+                        channel.Post <| SendResponse(Message "You leave the dungeon successfully")
                     else
-                        channel.Post <| Message "You cannot leave the dungeon"
+                        channel.Post <| SendResponse(Message "You cannot leave the dungeon")
                     state
                 | _ -> state
             return! waitUser newState }

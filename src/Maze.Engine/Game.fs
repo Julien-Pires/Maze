@@ -23,8 +23,10 @@ module Game =
                 | :? PlayerResponse as cmd -> worldChannel.EndpointB.Post cmd
                 | :? GameCommand as cmd ->
                     match cmd with
-                    | Switch _ -> ()
-                    | Response response -> playerChannel.EndpointB.Post response
+                    | ChangeWorld world ->
+                        let newWorld = World.create world worldChannel.EndpointA
+                        return! loop { game with World = newWorld }
+                    | SendResponse response -> playerChannel.EndpointB.Post response
                 | _ -> ()
                 return! loop game
             }

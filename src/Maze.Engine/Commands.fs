@@ -18,8 +18,8 @@ type GameResponse =
     | Message of Message
 
 type GameCommand =
-    | Response of GameResponse
-    | Switch of (Channel<PlayerResponse, GameCommand> -> Async<unit>)
+    | SendResponse of GameResponse
+    | ChangeWorld of (Socket<GameCommand, PlayerResponse> -> Async<unit>)
 
 type CommandResult<'a> = {
     Value: 'a
