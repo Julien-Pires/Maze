@@ -6,13 +6,13 @@ type RoomType =
     | Normal
     | Entrance
 
-type Room = {
-    Type: RoomType }
+type Room =
+    { Type: RoomType }
 
 type Rooms = Room list
 
-type Map = {
-    Rooms: Map<Position, Room> }
+type Map =
+    { Rooms: Map<Position, Room> }
 
 module Map =
     let canMove position target map =

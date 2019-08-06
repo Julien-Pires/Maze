@@ -1,21 +1,24 @@
 namespace Maze.Engine
 
-type UserAction =
-    | Input of (string -> unit)
+type PlayerAction =
+    | Input
 
-type InputCommand =
+type PlayerResponse =
+    | Entry of string
+
+type GameAction =
     | Move of Direction
     | Exit
     | GetPosition of AsyncReplyChannel<Position>
 
-type OutputCommand =
-    | UserAction of UserAction
-    | Response of Message
+type GameResponse =
+    | Action of PlayerAction
+    | Message of Message
 
-type Command =
-    | Input of InputCommand
-    | Output of OutputCommand
+type GameCommand =
+    | SendResponse of GameResponse
+    | ChangeWorld of (Socket<GameCommand, PlayerResponse> -> Async<unit>)
 
-type CommandResult<'a> = {
-    Value: 'a
-    Message: Message }
+type CommandResult<'a> =
+    { Value: 'a
+      Message: Message }

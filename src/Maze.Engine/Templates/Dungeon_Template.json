@@ -1,0 +1,12 @@
+{
+    "Rooms": [
+        {
+            "Position": 
+            {
+                "X": 1, 
+                "Y": 1 
+            },
+            "Type": "Normal"
+        }
+    ]
+}

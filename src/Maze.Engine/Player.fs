@@ -2,5 +2,5 @@
 
 type CharacterName = string
 
-type Character = {
-    Name : CharacterName }
+type Character =
+    { Name: CharacterName }
