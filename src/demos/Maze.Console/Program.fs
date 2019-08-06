@@ -1,6 +1,6 @@
 ﻿open System
 open FSharp.Control
-open Maze.Engine
+open Maze
 
 [<EntryPoint>]
 let main _ =

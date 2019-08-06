@@ -1,9 +1,9 @@
-namespace Maze.Engine.Tests
+namespace Maze.Tests
 
 open Expecto
 open FSharp.Control
 open Swensen.Unquote
-open Maze.Engine
+open Maze
 
 module Channel_Tests =
     let config = FsCheckConfig.defaultConfig

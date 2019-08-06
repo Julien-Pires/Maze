@@ -4,12 +4,14 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Maze.Engine\Maze.Engine.fsproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\Dungeon_Template.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Maze, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\engine\Maze\bin\Debug\netstandard2.0\Maze.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

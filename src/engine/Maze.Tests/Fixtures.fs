@@ -1,6 +1,6 @@
-﻿namespace Maze.Engine.Tests
+﻿namespace Maze.Tests
 
-open Maze.Engine
+open Maze
 
 [<AutoOpen>]
 module Fixtures =

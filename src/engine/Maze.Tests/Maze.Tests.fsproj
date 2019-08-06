@@ -4,6 +4,8 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <AssemblyName>Maze.Tests</AssemblyName>
+    <RootNamespace>Maze.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,12 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Maze.Engine\Maze.Engine.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Templates\Dungeon_Template.json" />
   </ItemGroup>
 
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Maze\Maze.fsproj" />
+  </ItemGroup>
 </Project>

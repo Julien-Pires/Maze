@@ -1,12 +1,12 @@
-namespace Maze.Engine.Tests
+namespace Maze.Tests
 
 open Expecto
 open Swensen.Unquote
 open Newtonsoft.Json
-open Maze.Engine
+open Maze
 open Maze.FSharp
 
-type MapTest = { Rooms : Maze.Engine.Tests.Room list }
+type MapTest = { Rooms : Maze.Tests.Room list }
 
 module Data_Tests =
     let config = { FsCheckConfig.defaultConfig with arbitrary = [typeof<RoomsGen>] }

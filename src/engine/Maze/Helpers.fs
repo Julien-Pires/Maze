@@ -1,4 +1,4 @@
-namespace Maze.Engine
+namespace Maze
 
 [<AutoOpen>]
 module Socket =

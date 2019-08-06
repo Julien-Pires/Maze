@@ -1,7 +1,7 @@
-namespace Maze.Engine.Tests
+namespace Maze.Tests
 
 open FsCheck
-open Maze.Engine
+open Maze
 
 type Room =
     { Position: Position

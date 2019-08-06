@@ -1,4 +1,4 @@
-namespace Maze.Engine
+namespace Maze
 
 open FSharp.Data
 open Maze.FSharp
