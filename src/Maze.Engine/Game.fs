@@ -1,6 +1,5 @@
 ﻿namespace Maze.Engine
 
-open FSharp.Control
 open Maze.FSharp
 
 type Game =

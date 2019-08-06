@@ -6,8 +6,8 @@ module Title =
     let init channel =
         let rec loop () =
             async {
-                channel.Post (SendResponse <| Message "Please enter the path to the file that contains the dungeon to explore:")
-                channel.Post (SendResponse <| Action(PlayerAction.Input))
+                channel |> postMessage "Please enter the path to the file that contains the dungeon to explore:"
+                channel |> postAction PlayerAction.Input
                 let! path = channel.Receive()
                 match path with
                 | Entry path ->
@@ -17,7 +17,7 @@ module Title =
                         let character = ({ Name = "Player" }, { X = 0; Y = 0 })
                         channel.Post (ChangeWorld <| Dungeon.init map character)
                     | Error err ->
-                        channel.Post (SendResponse <| Message err)
+                        channel |> postMessage err
                         return! loop()
             }
         loop()
