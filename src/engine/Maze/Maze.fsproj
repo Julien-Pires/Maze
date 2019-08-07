@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <PackageId>Maze</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Julien Pires</Authors>
+    <Company>Julien Pires</Company>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
