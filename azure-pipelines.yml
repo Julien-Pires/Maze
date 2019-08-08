@@ -45,10 +45,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/Maze.fsproj'
-    versioningScheme: 'byPrereleaseNumber'
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-    patchVersion: '$(Patch)'
+    versioningScheme: 'Off'
 
 - task: NuGetCommand@2
   displayName: Push nuget package to nuget.org
