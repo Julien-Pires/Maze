@@ -22,6 +22,11 @@ name: $(Major).$(Minor).$(Patch)$(rev:.r)
 steps:
 - task: NuGetToolInstaller@0
 
+- task: gittools.gitversion.gitversion-task.GitVersion@4
+  displayName: GitVersion
+  inputs:
+    preferBundledVersion: false
+
 - task: NuGetCommand@2
   displayName: Restore nuget package
   inputs:
@@ -48,9 +53,8 @@ steps:
     versioningScheme: 'Off'
 
 - task: NuGetCommand@2
-  displayName: Push nuget package to nuget.org
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: 'Nuget Org'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'a16648e9-7aa3-4279-aa07-8b92b53a552e'
