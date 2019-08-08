@@ -3,6 +3,8 @@ next-version: 0.1.0
 branches:
  feature:
    tag: useBranchName
+ develop:
+   tag: alpha
  master:
    tag: ''
 ignore:
