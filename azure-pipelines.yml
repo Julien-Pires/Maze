@@ -16,7 +16,6 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-name: $(Major).$(Minor).$(Patch)$(rev:.r)
 steps:
 - task: GitVersion@5
   inputs:
