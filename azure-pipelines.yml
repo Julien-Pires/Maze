@@ -18,7 +18,7 @@ variables:
   Minor: '1'
   Patch: '0'
 
-name: $(BuildDefinitionName)-$(MajorVersion).$(MinorVersion).$(PatchVersion)$(rev:.r)
+name: $(Major).$(Minor).$(Patch)$(rev:.r)
 steps:
 - task: NuGetToolInstaller@0
 
