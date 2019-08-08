@@ -14,11 +14,11 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  major: 0
-  minor: 1
-  patch: 0
+  Major: '0'
+  Minor: '1'
+  Patch: '0'
 
-name: $(MajorVersion).$(MinorVersion).$(PatchVersion)$(rev:.r)
+name: $(BuildDefinitionName)-$(MajorVersion).$(MinorVersion).$(PatchVersion)$(rev:.r)
 steps:
 - task: NuGetToolInstaller@0
 
@@ -45,7 +45,10 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/Maze.fsproj'
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'byPrereleaseNumber'
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Patch)'
 
 - task: DotNetCoreCLI@2
   displayName: Push nuget package to nuget.org
