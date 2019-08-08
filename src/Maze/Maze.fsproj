@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Maze</PackageId>
+    <PackageId>MazeEngine</PackageId>
     <Version>0.1.0</Version>
     <Authors>Julien Pires</Authors>
     <Company>Julien Pires</Company>
