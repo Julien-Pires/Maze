@@ -20,6 +20,11 @@ variables:
 
 name: $(Major).$(Minor).$(Patch)$(rev:.r)
 steps:
+- task: GitVersion@5
+  inputs:
+    runtime: 'core'
+    configFilePath: 'gitversion.yml'
+
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
@@ -48,9 +53,8 @@ steps:
     versioningScheme: 'Off'
 
 - task: NuGetCommand@2
-  displayName: Push nuget package to nuget.org
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: 'Nuget Org'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'a16648e9-7aa3-4279-aa07-8b92b53a552e'
