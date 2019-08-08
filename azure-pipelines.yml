@@ -49,7 +49,7 @@ steps:
     nobuild: true 
     packagesToPack: '**/Maze.fsproj'
     versioningScheme: byEnvVar 
-    versionEnvVar: GitVersion.NuGetVersion
+    versionEnvVar: GitVersion.FullSemVer
 
 - task: NuGetCommand@2
   inputs:
