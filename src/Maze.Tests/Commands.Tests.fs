@@ -1,8 +1,8 @@
-﻿namespace Maze.Engine.Tests
+﻿namespace Maze.Tests
 
 open Expecto
 open Swensen.Unquote
-open Maze.Engine
+open Maze
 
 module Parser_Tests = 
     [<Tests>]

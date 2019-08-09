@@ -1,4 +1,4 @@
-﻿namespace Maze.Engine.Tests
+﻿namespace Maze.Tests
 
 open Expecto
 

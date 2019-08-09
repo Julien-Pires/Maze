@@ -1,0 +1,15 @@
+mode: ContinuousDelivery 
+next-version: 0.1.0 
+branches:
+ feature:
+   mode: ContinuousDelivery
+   tag: useBranchName
+   increment: Inherit
+ pull-request:
+   tag: PullRequest
+ develop:
+   tag: alpha
+ master:
+   tag: ''
+ignore:
+ sha: []

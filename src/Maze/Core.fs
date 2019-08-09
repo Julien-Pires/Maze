@@ -1,4 +1,4 @@
-﻿namespace Maze.Engine
+﻿namespace Maze
 
 type Message = string
 
