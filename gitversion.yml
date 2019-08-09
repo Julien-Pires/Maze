@@ -3,7 +3,7 @@ next-version: 0.1.0
 branches:
  feature:
    regex: features?[/-]
-   tag: alpha
+   tag: useBranchName
  master:
    tag: ''
 ignore:
