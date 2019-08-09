@@ -3,12 +3,9 @@ next-version: 0.1.0
 branches:
  feature:
    regex: features?[/-]
-   mode: ContinuousDelivery
    tag: useBranchName
    increment: Inherit
  master:
-   mode: ContinuousDelivery
    tag: ''
-   increment: Patch
 ignore:
  sha: []
