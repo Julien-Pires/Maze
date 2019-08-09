@@ -42,18 +42,18 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: Build nuget package for Maze engine libraries
-  inputs:
-    command: 'pack'
-    nobuild: true 
-    packagesToPack: '**/Maze.fsproj'
-    versioningScheme: byEnvVar 
-    versionEnvVar: GitVersion.FullSemVer
+# - task: DotNetCoreCLI@2
+#   displayName: Build nuget package for Maze engine libraries
+#   inputs:
+#     command: 'pack'
+#     nobuild: true 
+#     packagesToPack: '**/Maze.fsproj'
+#     versioningScheme: byEnvVar 
+#     versionEnvVar: GitVersion.FullSemVer
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'a16648e9-7aa3-4279-aa07-8b92b53a552e'
+# - task: NuGetCommand@2
+#   inputs:
+#     command: 'push'
+#     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+#     nuGetFeedType: 'internal'
+#     publishVstsFeed: 'a16648e9-7aa3-4279-aa07-8b92b53a552e'
