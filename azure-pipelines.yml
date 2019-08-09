@@ -58,3 +58,4 @@ steps:
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: 'a16648e9-7aa3-4279-aa07-8b92b53a552e'
+    versioningScheme: byBuildNumber
