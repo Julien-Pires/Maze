@@ -4,7 +4,6 @@ branches:
  feature:
    regex: features?[/-]
    tag: useBranchName
-   increment: Inherit
  master:
    tag: ''
 ignore:
