@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <AssemblyName>Maze.Tests</AssemblyName>
+    <RootNamespace>Maze.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
+    <Compile Include="Expecto.fs" />
+    <Compile Include="Fixtures.fs" />
+    <Compile Include="Gen.fs" />
+    <Compile Include="Channel.Tests.fs" />
+    <Compile Include="Commands.Tests.fs" />
+    <Compile Include="Map.Tests.fs" />
+    <Compile Include="Dungeon.Tests.fs" />
+    <Compile Include="Data.Tests.fs" />
+    <Compile Include="Main.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Expecto" Version="8.10.1" />
+    <PackageReference Include="Expecto.FsCheck" Version="8.10.1" />
+    <PackageReference Include="Expecto.VisualStudio.TestAdapter" Version="10.0.2" />
+    <PackageReference Include="FsCheck" Version="2.13.0" />
+    <PackageReference Include="FSharp.Core" Version="4.6.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Unquote" Version="5.0.0" />
+    <PackageReference Include="YoloDev.Expecto.TestSdk" Version="0.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Remove="FSharp.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Templates\Dungeon_Template.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Maze\Maze.fsproj" />
+  </ItemGroup>
+</Project>
