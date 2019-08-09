@@ -4,7 +4,7 @@ branches:
  feature:
    regex: features?[/-]
    mode: ContinuousDelivery
-   tag: alpha
+   tag: useBranchName
    increment: Inherit
  master:
    mode: ContinuousDelivery
