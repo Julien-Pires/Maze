@@ -35,7 +35,6 @@ steps:
     command: 'build'
     projects: '**/*.fsproj'
     arguments: '--configuration Release'
-    versioningScheme: byBuildNumber
 
 - task: VSTest@2
   displayName: Execute unit tests for Maze solution
