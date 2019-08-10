@@ -44,6 +44,7 @@ steps:
     command: 'pack'
     nobuild: true 
     packagesToPack: '**/Maze.fsproj'
+    includeReferencedProjects: true
     versioningScheme: byEnvVar 
     versionEnvVar: GitVersion.NuGetVersion
 
