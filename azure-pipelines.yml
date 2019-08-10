@@ -18,6 +18,8 @@ steps:
     configFilePath: 'gitversion.yml'
 
 - task: NuGetToolInstaller@0
+  inputs:
+    checkLatest: true
 
 - task: NuGetCommand@2
   displayName: Restore nuget package
