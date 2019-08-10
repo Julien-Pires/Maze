@@ -1,11 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  <PropertyGroup>
     <PackageId>Maze.Engine</PackageId>
     <Version>0.1.0</Version>
     <Authors>Julien Pires</Authors>
     <Company>Julien Pires</Company>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+    <PackageProjectUrl>https://github.com/Julien-Pires/Maze</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" PrivateAssets="all" />
