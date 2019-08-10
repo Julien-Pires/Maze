@@ -5,6 +5,7 @@
     <Authors>Julien Pires</Authors>
     <Company>Julien Pires</Company>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" PrivateAssets="all" />
@@ -32,4 +33,9 @@
       <Link>Templates/Dungeon_Template.json</Link>
     </EmbeddedResource>
   </ItemGroup>
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+    </ItemGroup>
+  </Target>
 </Project>
