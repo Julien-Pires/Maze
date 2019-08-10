@@ -42,9 +42,8 @@ steps:
   displayName: Build nuget package for Maze engine libraries
   inputs:
     command: 'pack'
-    nobuild: true 
-    packagesToPack: '**/Maze.fsproj'
-    includeReferencedProjects: true
+    nobuild: true
+    packagesToPack: '**/*.fsproj'
     versioningScheme: byEnvVar 
     versionEnvVar: GitVersion.NuGetVersion
 
