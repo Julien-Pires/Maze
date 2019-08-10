@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" />
     <ProjectReference Include="..\Maze\Maze.fsproj" />
   </ItemGroup>
 </Project>
