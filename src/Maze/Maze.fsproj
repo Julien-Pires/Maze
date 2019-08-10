@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>MazeEngine</PackageId>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>Maze.Engine</PackageId>
     <Version>0.1.0</Version>
     <Authors>Julien Pires</Authors>
     <Company>Julien Pires</Company>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/Julien-Pires/Maze</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" />
-    <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj">
-      <Name>Maze.FSharp.fsproj</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core.fs" />
@@ -35,4 +36,9 @@
       <Link>Templates/Dungeon_Template.json</Link>
     </EmbeddedResource>
   </ItemGroup>
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+    </ItemGroup>
+  </Target>
 </Project>

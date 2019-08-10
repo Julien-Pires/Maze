@@ -2,6 +2,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <Authors>Julien Pires</Authors>
+    <Company>Julien Pires</Company>
+    <PackageProjectUrl>https://github.com/Julien-Pires/Maze</PackageProjectUrl>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core.fs" />
     <Compile Include="IO.fs" />

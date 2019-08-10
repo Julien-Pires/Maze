@@ -17,7 +17,10 @@ steps:
     runtime: 'core'
     configFilePath: 'gitversion.yml'
 
-- task: NuGetToolInstaller@0
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 
+    checkLatest: true
 
 - task: NuGetCommand@2
   displayName: Restore nuget package
@@ -42,7 +45,6 @@ steps:
   displayName: Build nuget package for Maze engine libraries
   inputs:
     command: 'pack'
-    nobuild: true 
     packagesToPack: '**/Maze.fsproj'
     versioningScheme: byEnvVar 
     versionEnvVar: GitVersion.NuGetVersion
