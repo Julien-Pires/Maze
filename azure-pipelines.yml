@@ -41,7 +41,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   displayName: Build nuget package for Maze engine libraries
   inputs:
     command: 'pack'
