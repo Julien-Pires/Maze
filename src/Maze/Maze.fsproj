@@ -9,7 +9,9 @@
     <Authors>Julien Pires</Authors>
     <Company>Julien Pires</Company>
     <PackageProjectUrl>https://github.com/Julien-Pires/Maze</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Julien-Pires/Maze/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/Julien-Pires/Maze/master/docs/files/img/logo.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Julien-Pires/Maze.git</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" PrivateAssets="all" />
