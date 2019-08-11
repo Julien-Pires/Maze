@@ -9,6 +9,7 @@
     <Authors>Julien Pires</Authors>
     <Company>Julien Pires</Company>
     <PackageProjectUrl>https://github.com/Julien-Pires/Maze</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/Julien-Pires/Maze/master/docs/files/img/logo.png</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maze.FSharp\Maze.FSharp.fsproj" PrivateAssets="all" />
